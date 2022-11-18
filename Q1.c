@@ -12,8 +12,8 @@ void * countA() {
     sched_setscheduler(pid_num, SCHED_OTHER, &param);
     clock_t t;
     t = clock();
-    double int x = pow(2,32);
-    double int i = 0;
+    double x = pow(2,32);
+    double i = 0;
     while (i<x) {
         i++;
     }
@@ -29,8 +29,8 @@ void * countB() {
     sched_setscheduler(pid_num, SCHED_FIFO, &param);
     clock_t t;
     t = clock();
-    double int x = pow(2,32);
-    double int i = 0;
+    double x = pow(2,32);
+    double i = 0;
     while (i<x) {
         i++;
     }
@@ -46,8 +46,8 @@ void * countC() {
     sched_setscheduler(pid_num, SCHED_RR, &param);
     clock_t t;
     t = clock();
-    double int x = pow(2,32);
-    double int i = 0;
+    double x = pow(2,32);
+    double i = 0;
     while (i<x) {
         i++;
     }
