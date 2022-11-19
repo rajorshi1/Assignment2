@@ -60,7 +60,7 @@ int main() {
         execl("bash compile.sh", NULL);
         t = clock() - t;
         float time_taken = ((float)t)/CLOCKS_PER_SEC;
-        printf("Time taken in SCHED_OTHER: %f\n", time_taken);
+        printf("Time taken in SCHED_RR: %f\n", time_taken);
         exit(0);
     }
     else if (c1 > 0) {
