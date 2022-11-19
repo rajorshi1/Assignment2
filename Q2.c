@@ -17,7 +17,7 @@ int main() {
         struct sched_param param;
         int pid_num = 0;
         sched_setscheduler(pid_num, SCHED_OTHER, &param);
-        execl("bash compile.sh", NULL);
+        execl("/bin/sh", "sh", "compile.sh", (char *) NULL);
         exit(0);
     }
     else if (c1 > 0) {
@@ -36,7 +36,7 @@ int main() {
         struct sched_param param;
         int pid_num = 0;
         sched_setscheduler(pid_num, SCHED_FIFO, &param);
-        execl("bash compile.sh", NULL);
+        execl("/bin/sh", "sh", "compile.sh", (char *) NULL);
         exit(0);
     }
     else if (c2 > 0) {
@@ -55,12 +55,7 @@ int main() {
         struct sched_param param;
         int pid_num = 0;
         sched_setscheduler(pid_num, SCHED_RR, &param);
-        clock_t t;
-        t = clock();
-        execl("bash compile.sh", NULL);
-        t = clock() - t;
-        float time_taken = ((float)t)/CLOCKS_PER_SEC;
-        printf("Time taken in SCHED_RR: %f\n", time_taken);
+        execl("/bin/sh", "sh", "compile.sh", (char *) NULL);
         exit(0);
     }
     else if (c1 > 0) {
@@ -70,6 +65,6 @@ int main() {
         printf("Error in forking");
     }
     t = clock() - t;
-    float time_taken = ((float)t)/CLOCKS_PER_SEC;
+    time_taken = ((float)t)/CLOCKS_PER_SEC;
     printf("Time taken in SCHED_RR: %f\n", time_taken);
 }
