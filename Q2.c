@@ -27,7 +27,7 @@ int main() {
         printf("Error in forking");
     }
     t = clock() - t;
-    time_taken = ((float)t)/CLOCKS_PER_SEC;
+    float time_taken = ((float)t)/CLOCKS_PER_SEC;
     printf("Time taken in SCHED_OTHER: %f\n", time_taken);
     pid_t c2;
     t = clock();
