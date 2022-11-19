@@ -9,10 +9,7 @@
 #include <math.h>
 
 int main() {
-    printf("Doing Stuff");
     pid_t c1;
-    pid_t c2;
-    pid_t c3;
     c1 = fork();
     if (c1 == 0) {
         struct sched_param param;
@@ -32,6 +29,7 @@ int main() {
     else {
         printf("Error in forking");
     }
+    pid_t c2;
     c2 = fork();
     if (c2 == 0) {
         struct sched_param param;
@@ -51,6 +49,7 @@ int main() {
     else {
         printf("Error in forking");
     }
+    pid_t c3;
     c3 = fork();
     if (c3 == 0) {
         struct sched_param param;
