@@ -11,15 +11,18 @@ void * countA() {
     param.sched_priority = 0;
     int pid_num = 0;
     sched_setscheduler(pid_num, SCHED_OTHER, &param);
-    clock_t t;
-    t = clock();
+    struct timespec before;
+    clock_gettime(CLOCK_MONOTONIC, &before);
     unsigned long x =  4294967296UL;
     unsigned long i = 0;
     while (i<x) {
         i++;
     }
-    t = clock() - t;
-    float time_taken = ((float)t)/CLOCKS_PER_SEC;
+    struct timespec after;
+    clock_gettime(CLOCK_MONOTONIC, &after);
+    int time1 = (before.tv_sec * 1000000000) + before.tv_nsec;
+    int time2 = (after.tv_sec * 1000000000) + after.tv_nsec;
+    float time_taken = (time2 - time1)/1000000000;
     printf("Time taken in SCHED_OTHER: %f\n", time_taken);
     return NULL;
 }
@@ -28,16 +31,19 @@ void * countB() {
     struct sched_param param;
     param.sched_priority = 99;
     int pid_num = 0;
-    pthread_setschedparam(pid_num, SCHED_FIFO, &param);
-    clock_t t;
-    t = clock();
+    sched_setscheduler(pid_num, SCHED_FIFO, &param);
+    struct timespec before;
+    clock_gettime(CLOCK_MONOTONIC, &before);
     unsigned long x =  4294967296UL;
     unsigned long i = 0;
     while (i<x) {
         i++;
     }
-    t = clock() - t;
-    float time_taken = ((float)t)/CLOCKS_PER_SEC;
+    struct timespec after;
+    clock_gettime(CLOCK_MONOTONIC, &after);
+    int time1 = (before.tv_sec * 1000000000) + before.tv_nsec;
+    int time2 = (after.tv_sec * 1000000000) + after.tv_nsec;
+    float time_taken = (time2 - time1)/1000000000;
     printf("Time taken in SCHED_FIFO: %f\n", time_taken);
     return NULL;
 }
@@ -46,16 +52,19 @@ void * countC() {
     struct sched_param param;
     param.sched_priority = 99;
     int pid_num = 0;
-    pthread_setschedparam(pid_num, SCHED_RR, &param);
-    clock_t t;
-    t = clock();
+    sched_setscheduler(pid_num, SCHED_RR, &param);
+    struct timespec before;
+    clock_gettime(CLOCK_MONOTONIC, &before);
     unsigned long x =  4294967296UL;
     unsigned long i = 0;
     while (i<x) {
         i++;
     }
-    t = clock() - t;
-    float time_taken = ((float)t)/CLOCKS_PER_SEC;
+    struct timespec after;
+    clock_gettime(CLOCK_MONOTONIC, &after);
+    int time1 = (before.tv_sec * 1000000000) + before.tv_nsec;
+    int time2 = (after.tv_sec * 1000000000) + after.tv_nsec;
+    float time_taken = (time2 - time1)/1000000000;
     printf("Time taken in SCHED_RR: %f\n", time_taken);
     return NULL;
 }
