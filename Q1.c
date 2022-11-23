@@ -20,9 +20,9 @@ void * countA() {
     }
     struct timespec after;
     clock_gettime(CLOCK_MONOTONIC, &after);
-    int time1 = (before.tv_sec * 1000000000) + before.tv_nsec;
-    int time2 = (after.tv_sec * 1000000000) + after.tv_nsec;
-    float time_taken = (time2 - time1)/1000000000;
+    unsigned long time1 = (before.tv_sec * 1000000000) + before.tv_nsec;
+    unsigned long time2 = (after.tv_sec * 1000000000) + after.tv_nsec;
+    float time_taken = ((float)(time2 - time1))/1000000000;
     printf("Time taken in SCHED_OTHER: %f\n", time_taken);
     return NULL;
 }
@@ -41,9 +41,9 @@ void * countB() {
     }
     struct timespec after;
     clock_gettime(CLOCK_MONOTONIC, &after);
-    int time1 = (before.tv_sec * 1000000000) + before.tv_nsec;
-    int time2 = (after.tv_sec * 1000000000) + after.tv_nsec;
-    float time_taken = (time2 - time1)/1000000000;
+    unsigned long time1 = (before.tv_sec * 1000000000) + before.tv_nsec;
+    unsigned long time2 = (after.tv_sec * 1000000000) + after.tv_nsec;
+    float time_taken = ((float)(time2 - time1))/1000000000;
     printf("Time taken in SCHED_FIFO: %f\n", time_taken);
     return NULL;
 }
@@ -62,9 +62,9 @@ void * countC() {
     }
     struct timespec after;
     clock_gettime(CLOCK_MONOTONIC, &after);
-    int time1 = (before.tv_sec * 1000000000) + before.tv_nsec;
-    int time2 = (after.tv_sec * 1000000000) + after.tv_nsec;
-    float time_taken = (time2 - time1)/1000000000;
+    unsigned long time1 = (before.tv_sec * 1000000000) + before.tv_nsec;
+    unsigned long time2 = (after.tv_sec * 1000000000) + after.tv_nsec;
+    float time_taken = ((float)(time2 - time1))/1000000000;
     printf("Time taken in SCHED_RR: %f\n", time_taken);
     return NULL;
 }
