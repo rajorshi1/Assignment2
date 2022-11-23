@@ -9,7 +9,7 @@
 void * countA() {
     struct sched_param param;
     int pid_num = 0;
-    sched_setscheduler(pid_num, SCHED_OTHER, &param);
+    pthread_setschedparam(pid_num, SCHED_OTHER, &param);
     clock_t t;
     t = clock();
     double x = pow(2,32);
@@ -26,7 +26,7 @@ void * countA() {
 void * countB() {
     struct sched_param param;
     int pid_num = 0;
-    sched_setscheduler(pid_num, SCHED_FIFO, &param);
+    pthread_setschedparam(pid_num, SCHED_FIFO, &param);
     clock_t t;
     t = clock();
     double x = pow(2,32);
@@ -43,7 +43,7 @@ void * countB() {
 void * countC() {
     struct sched_param param;
     int pid_num = 0;
-    sched_setscheduler(pid_num, SCHED_RR, &param);
+    pthread_setschedparam(pid_num, SCHED_RR, &param);
     clock_t t;
     t = clock();
     double x = pow(2,32);
@@ -58,14 +58,14 @@ void * countC() {
 }
 
 int main() {
-    pthread_t ThrA;
-    pthread_t ThrB;
-    pthread_t ThrC;
+    pthread_t ThrA = 0;
+    pthread_t ThrB = 0;
+    pthread_t ThrC = 0;
     pthread_create(&ThrA, NULL, &countA, NULL);
-    pthread_join(ThrA, NULL);
     pthread_create(&ThrB, NULL, &countB, NULL);
-    pthread_join(ThrB, NULL);
     pthread_create(&ThrC, NULL, &countC, NULL);
+    pthread_join(ThrA, NULL);
+    pthread_join(ThrB, NULL);
     pthread_join(ThrC, NULL);
     pthread_exit(NULL);
     return 0;
