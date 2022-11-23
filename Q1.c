@@ -8,12 +8,13 @@
 
 void * countA() {
     struct sched_param param;
+    param.sched_priority = 0;
     int pid_num = 0;
-    pthread_setschedparam(pid_num, SCHED_OTHER, &param);
+    sched_setscheduler(pid_num, SCHED_OTHER, &param);
     clock_t t;
     t = clock();
-    double x = pow(2,32);
-    double i = 0;
+    unsigned long x =  4294967296UL;
+    unsigned long i = 0;
     while (i<x) {
         i++;
     }
@@ -25,12 +26,13 @@ void * countA() {
 
 void * countB() {
     struct sched_param param;
+    param.sched_priority = 99;
     int pid_num = 0;
     pthread_setschedparam(pid_num, SCHED_FIFO, &param);
     clock_t t;
     t = clock();
-    double x = pow(2,32);
-    double i = 0;
+    unsigned long x =  4294967296UL;
+    unsigned long i = 0;
     while (i<x) {
         i++;
     }
@@ -42,12 +44,13 @@ void * countB() {
 
 void * countC() {
     struct sched_param param;
+    param.sched_priority = 99;
     int pid_num = 0;
     pthread_setschedparam(pid_num, SCHED_RR, &param);
     clock_t t;
     t = clock();
-    double x = pow(2,32);
-    double i = 0;
+    unsigned long x =  4294967296UL;
+    unsigned long i = 0;
     while (i<x) {
         i++;
     }
@@ -58,9 +61,9 @@ void * countC() {
 }
 
 int main() {
-    pthread_t ThrA = 0;
-    pthread_t ThrB = 0;
-    pthread_t ThrC = 0;
+    pthread_t ThrA;
+    pthread_t ThrB;
+    pthread_t ThrC;
     pthread_create(&ThrA, NULL, &countA, NULL);
     pthread_create(&ThrB, NULL, &countB, NULL);
     pthread_create(&ThrC, NULL, &countC, NULL);
