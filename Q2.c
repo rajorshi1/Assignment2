@@ -7,64 +7,131 @@
 #include <unistd.h>
 #include <errno.h>
 #include <math.h>
+#include <sys/resource.h>
+#include <sys/time.h>
+
+float times[3];
 
 int main() {
     pid_t c1;
-    clock_t t;
-    t = clock();
+    pid_t c2;
+    pid_t c3;
+    struct timespec before1;
+    struct timespec before2;
+    struct timespec before3;
+    struct timespec buffer;
+    struct timespec after1;
+    struct timespec after2;
+    struct timespec after3;
+    clock_gettime(CLOCK_MONOTONIC,&before1);
     c1 = fork();
     if (c1 == 0) {
-        struct sched_param param;
-        int pid_num = 0;
-        sched_setscheduler(pid_num, SCHED_OTHER, &param);
-        execl("/bin/sh", "sh", "compile.sh", (char *) NULL);
+        setpriority(0, PRIO_PROCESS, 1);
+        execl("/bin/sh","sh","compile.sh", (char *) NULL);
         exit(0);
-    }
-    else if (c1 > 0) {
-        waitpid(0, NULL, 0);
     }
     else {
         printf("Error in forking");
     }
-    t = clock() - t;
-    float time_taken = ((float)t)/CLOCKS_PER_SEC;
-    printf("Time taken in SCHED_OTHER: %f\n", time_taken);
-    pid_t c2;
-    t = clock();
+    clock_gettime(CLOCK_MONOTONIC,&before2);
     c2 = fork();
     if (c2 == 0) {
-        struct sched_param param;
-        int pid_num = 0;
-        sched_setscheduler(pid_num, SCHED_FIFO, &param);
-        execl("/bin/sh", "sh", "compile.sh", (char *) NULL);
+        setpriority(0, PRIO_PROCESS,20);
+        execl("/bin/sh","sh","compile.sh", (char *) NULL);
         exit(0);
-    }
-    else if (c2 > 0) {
-        waitpid(0, NULL, 0);
     }
     else {
         printf("Error in forking");
     }
-    t = clock() - t;
-    time_taken = ((float)t)/CLOCKS_PER_SEC;
-    printf("Time taken in SCHED_FIFO: %f\n", time_taken);
-    pid_t c3;
-    t = clock();
+    clock_gettime(CLOCK_MONOTONIC,&before3);
     c3 = fork();
     if (c3 == 0) {
-        struct sched_param param;
-        int pid_num = 0;
-        sched_setscheduler(pid_num, SCHED_RR, &param);
-        execl("/bin/sh", "sh", "compile.sh", (char *) NULL);
+        setpriority(0, PRIO_PROCESS, 40);
+        execl("/bin/sh","sh","compile.sh", (char *) NULL);
         exit(0);
-    }
-    else if (c1 > 0) {
-        waitpid(0, NULL, 0);
     }
     else {
         printf("Error in forking");
     }
-    t = clock() - t;
-    time_taken = ((float)t)/CLOCKS_PER_SEC;
-    printf("Time taken in SCHED_RR: %f\n", time_taken);
+    pid_t nig = wait(NULL);
+    clock_gettime(CLOCK_MONOTONIC,&buffer);
+    if (nig == c1) {
+        clock_gettime(CLOCK_MONOTONIC, &after1);
+        unsigned long time1 = (before1.tv_sec * 1000000000) + before1.tv_nsec;
+        unsigned long time2 = (after1.tv_sec * 1000000000) + after1.tv_nsec;
+        unsigned long time3 = (buffer.tv_sec * 1000000000) + buffer.tv_nsec;
+        float time_taken = ((float)(time2 - time1 - time3))/1000000000;
+        times[0] = time_taken;
+    }
+    else if (nig == c2)  {
+        clock_gettime(CLOCK_MONOTONIC, &after1);
+        unsigned long time1 = (before2.tv_sec * 1000000000) + before2.tv_nsec;
+        unsigned long time2 = (after2.tv_sec * 1000000000) + after2.tv_nsec;
+        unsigned long time3 = (buffer.tv_sec * 1000000000) + buffer.tv_nsec;
+        float time_taken = ((float)(time2 - time1 - time3))/1000000000;
+        times[1] = time_taken;
+    }
+    else if (nig == c3) {
+        clock_gettime(CLOCK_MONOTONIC, &after1);
+        unsigned long time1 = (before3.tv_sec * 1000000000) + before3.tv_nsec;
+        unsigned long time2 = (after3.tv_sec * 1000000000) + after3.tv_nsec;
+        unsigned long time3 = (buffer.tv_sec * 1000000000) + buffer.tv_nsec;
+        float time_taken = ((float)(time2 - time1 - time3))/1000000000;
+        times[2] = time_taken;
+    }
+    nig = wait(NULL);
+    clock_gettime(CLOCK_MONOTONIC,&buffer);
+    if (nig == c1) {
+        clock_gettime(CLOCK_MONOTONIC, &after1);
+        unsigned long time1 = (before1.tv_sec * 1000000000) + before1.tv_nsec;
+        unsigned long time2 = (after1.tv_sec * 1000000000) + after1.tv_nsec;
+        unsigned long time3 = (buffer.tv_sec * 1000000000) + buffer.tv_nsec;
+        float time_taken = ((float)(time2 - time1 - time3))/1000000000;
+        times[0] = time_taken;
+    }
+    else if (nig == c2)  {
+        clock_gettime(CLOCK_MONOTONIC, &after1);
+        unsigned long time1 = (before2.tv_sec * 1000000000) + before2.tv_nsec;
+        unsigned long time2 = (after2.tv_sec * 1000000000) + after2.tv_nsec;
+        unsigned long time3 = (buffer.tv_sec * 1000000000) + buffer.tv_nsec;
+        float time_taken = ((float)(time2 - time1 - time3))/1000000000;
+        times[1] = time_taken;
+    }
+    else if (nig == c3) {
+        clock_gettime(CLOCK_MONOTONIC, &after1);
+        unsigned long time1 = (before3.tv_sec * 1000000000) + before3.tv_nsec;
+        unsigned long time2 = (after3.tv_sec * 1000000000) + after3.tv_nsec;
+        unsigned long time3 = (buffer.tv_sec * 1000000000) + buffer.tv_nsec;
+        float time_taken = ((float)(time2 - time1 - time3))/1000000000;
+        times[2] = time_taken;
+    }
+    nig = wait(NULL);
+    clock_gettime(CLOCK_MONOTONIC,&buffer);
+    if (nig == c1) {
+        clock_gettime(CLOCK_MONOTONIC, &after1);
+        unsigned long time1 = (before1.tv_sec * 1000000000) + before1.tv_nsec;
+        unsigned long time2 = (after1.tv_sec * 1000000000) + after1.tv_nsec;
+        unsigned long time3 = (buffer.tv_sec * 1000000000) + buffer.tv_nsec;
+        float time_taken = ((float)(time2 - time1 - time3))/1000000000;
+        times[0] = time_taken;
+    }
+    else if (nig == c2)  {
+        clock_gettime(CLOCK_MONOTONIC, &after1);
+        unsigned long time1 = (before2.tv_sec * 1000000000) + before2.tv_nsec;
+        unsigned long time2 = (after2.tv_sec * 1000000000) + after2.tv_nsec;
+        unsigned long time3 = (buffer.tv_sec * 1000000000) + buffer.tv_nsec;
+        float time_taken = ((float)(time2 - time1 - time3))/1000000000;
+        times[1] = time_taken;
+    }
+    else if (nig == c3) {
+        clock_gettime(CLOCK_MONOTONIC, &after1);
+        unsigned long time1 = (before3.tv_sec * 1000000000) + before3.tv_nsec;
+        unsigned long time2 = (after3.tv_sec * 1000000000) + after3.tv_nsec;
+        unsigned long time3 = (buffer.tv_sec * 1000000000) + buffer.tv_nsec;
+        float time_taken = ((float)(time2 - time1 - time3))/1000000000;
+        times[2] = time_taken;
+    }
+    for (int i=0; i<3; i++) {
+        printf("Time taken with Priority %d: %f\n", 1, times[i]);
+    }
 }
