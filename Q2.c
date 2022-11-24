@@ -20,8 +20,6 @@ int main() {
     struct timespec before2;
     struct timespec before3;
     struct timespec after1;
-    struct timespec after2;
-    struct timespec after3;
     clock_gettime(CLOCK_MONOTONIC,&before1);
     c1 = fork();
     if (c1 == 0) {
@@ -46,21 +44,19 @@ int main() {
     for (int i=0; i<3; i++) {
         pid_t res = wait(NULL);
         clock_gettime(CLOCK_MONOTONIC,&after1);
+        unsigned long time2 = (after1.tv_sec * 1000000000) + after1.tv_nsec;
         if (res == c1) {
             unsigned long time1 = (before1.tv_sec * 1000000000) + before1.tv_nsec;
-            unsigned long time2 = (after1.tv_sec * 1000000000) + after1.tv_nsec;
             float time_taken = ((float)(time2 - time1))/1000000000;
             times[0] = time_taken;
         }
         else if (res == c2)  {
             unsigned long time1 = (before2.tv_sec * 1000000000) + before2.tv_nsec;
-            unsigned long time2 = (after1.tv_sec * 1000000000) + after1.tv_nsec;
             float time_taken = ((float)(time2 - time1))/1000000000;
             times[1] = time_taken;
         }
         else if (res == c3) {
             unsigned long time1 = (before3.tv_sec * 1000000000) + before3.tv_nsec;
-            unsigned long time2 = (after1.tv_sec * 1000000000) + after1.tv_nsec;
             float time_taken = ((float)(time2 - time1))/1000000000;
             times[2] = time_taken;
         }
