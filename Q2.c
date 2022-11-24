@@ -61,7 +61,7 @@ int main() {
             times[2] = time_taken;
         }
     }
-    printf("Time Taken with priority 1: %f\n", times[0]);
+    printf("Time Taken with priority 1: %f\n", times[2]);
     printf("Time Taken with priority 20: %f\n", times[1]);
-    printf("Time Taken with priority 40: %f\n", times[2]);
+    printf("Time Taken with priority 40: %f\n", times[0]);
 }
