@@ -26,21 +26,21 @@ int main() {
     c1 = fork();
     if (c1 == 0) {
         setpriority(0, PRIO_PROCESS, 1);
-        execl("/bin/sh","sh","compile.sh", (char *) NULL);
+        execl("/bin/sh","sh","naruto.sh", (char *) NULL);
         exit(0);
     }
     clock_gettime(CLOCK_MONOTONIC,&before2);
     c2 = fork();
     if (c2 == 0) {
         setpriority(0, PRIO_PROCESS,20);
-        execl("/bin/sh","sh","compile.sh", (char *) NULL);
+        execl("/bin/sh","sh","sasuke.sh", (char *) NULL);
         exit(0);
     }
     clock_gettime(CLOCK_MONOTONIC,&before3);
     c3 = fork();
     if (c3 == 0) {
         setpriority(0, PRIO_PROCESS, 40);
-        execl("/bin/sh","sh","compile.sh", (char *) NULL);
+        execl("/bin/sh","sh","sakura.sh", (char *) NULL);
         exit(0);
     }
     pid_t res = wait(NULL);
@@ -103,7 +103,7 @@ int main() {
         float time_taken = ((float)(time2 - time1))/1000000000;
         times[2] = time_taken;
     }
-    printf("Time Taken with priority 0: %f\n", times[0]);
+    printf("Time Taken with priority 1: %f\n", times[0]);
     printf("Time Taken with priority 20: %f\n", times[1]);
     printf("Time Taken with priority 40: %f\n", times[2]);
 }
