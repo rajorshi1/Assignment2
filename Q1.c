@@ -6,11 +6,15 @@
 #include <errno.h>
 #include <math.h>
 
+pthread_t ThrA;
+pthread_t ThrB;
+pthread_t ThrC;
+
 void * countA() {
     struct sched_param param;
     param.sched_priority = 0;
-    int pid_num = 0;
-    sched_setscheduler(pid_num, SCHED_OTHER, &param);
+    int a = pthread_setschedparam(ThrA, SCHED_OTHER, &param);
+    if (a) printf("%d\n Error\n", a);
     struct timespec before;
     clock_gettime(CLOCK_MONOTONIC, &before);
     unsigned long x =  4294967296UL;
@@ -30,8 +34,8 @@ void * countA() {
 void * countB() {
     struct sched_param param;
     param.sched_priority = 99;
-    int pid_num = 0;
-    sched_setscheduler(pid_num, SCHED_FIFO, &param);
+    int a = pthread_setschedparam(ThrB, SCHED_FIFO, &param);
+    if (a) printf("%d\n Error\n", a);
     struct timespec before;
     clock_gettime(CLOCK_MONOTONIC, &before);
     unsigned long x =  4294967296UL;
@@ -51,8 +55,8 @@ void * countB() {
 void * countC() {
     struct sched_param param;
     param.sched_priority = 99;
-    int pid_num = 0;
-    sched_setscheduler(pid_num, SCHED_RR, &param);
+    int a = pthread_setschedparam(ThrC, SCHED_RR, &param);
+    if (a) printf("%d\n Error\n", a);
     struct timespec before;
     clock_gettime(CLOCK_MONOTONIC, &before);
     unsigned long x =  4294967296UL;
@@ -70,9 +74,6 @@ void * countC() {
 }
 
 int main() {
-    pthread_t ThrA;
-    pthread_t ThrB;
-    pthread_t ThrC;
     pthread_create(&ThrA, NULL, &countA, NULL);
     pthread_create(&ThrB, NULL, &countB, NULL);
     pthread_create(&ThrC, NULL, &countC, NULL);
