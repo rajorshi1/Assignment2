@@ -30,9 +30,6 @@ int main() {
         execl("/bin/sh","sh","compile.sh", (char *) NULL);
         exit(0);
     }
-    else {
-        printf("Error in forking");
-    }
     clock_gettime(CLOCK_MONOTONIC,&before2);
     c2 = fork();
     if (c2 == 0) {
@@ -40,18 +37,12 @@ int main() {
         execl("/bin/sh","sh","compile.sh", (char *) NULL);
         exit(0);
     }
-    else {
-        printf("Error in forking");
-    }
     clock_gettime(CLOCK_MONOTONIC,&before3);
     c3 = fork();
     if (c3 == 0) {
         setpriority(0, PRIO_PROCESS, 40);
         execl("/bin/sh","sh","compile.sh", (char *) NULL);
         exit(0);
-    }
-    else {
-        printf("Error in forking");
     }
     pid_t nig = wait(NULL);
     clock_gettime(CLOCK_MONOTONIC,&buffer);
@@ -122,7 +113,7 @@ int main() {
         float time_taken = ((float)(time2 - time1))/1000000000;
         times[2] = time_taken;
     }
-    for (int i=0; i<3; i++) {
-        printf("Time taken with Priority %d: %f\n", 1, times[i]);
-    }
+    printf("Time Taken with priority 0: %f\n", times[0]);
+    printf("Time Taken with priority 20: %f\n", times[0]);
+    printf("Time Taken with priority 40: %f\n", times[0]);
 }
