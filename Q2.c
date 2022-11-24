@@ -46,21 +46,18 @@ int main() {
     pid_t res = wait(NULL);
     clock_gettime(CLOCK_MONOTONIC,&after1);
     if (res == c1) {
-        clock_gettime(CLOCK_MONOTONIC, &after1);
         unsigned long time1 = (before1.tv_sec * 1000000000) + before1.tv_nsec;
         unsigned long time2 = (after1.tv_sec * 1000000000) + after1.tv_nsec;
         float time_taken = ((float)(time2 - time1))/1000000000;
         times[0] = time_taken;
     }
     else if (res == c2)  {
-        clock_gettime(CLOCK_MONOTONIC, &after1);
         unsigned long time1 = (before2.tv_sec * 1000000000) + before2.tv_nsec;
         unsigned long time2 = (after1.tv_sec * 1000000000) + after1.tv_nsec;
         float time_taken = ((float)(time2 - time1))/1000000000;
         times[1] = time_taken;
     }
     else if (res == c3) {
-        clock_gettime(CLOCK_MONOTONIC, &after1);
         unsigned long time1 = (before3.tv_sec * 1000000000) + before3.tv_nsec;
         unsigned long time2 = (after1.tv_sec * 1000000000) + after1.tv_nsec;
         float time_taken = ((float)(time2 - time1))/1000000000;
@@ -69,21 +66,18 @@ int main() {
     res = wait(NULL);
     clock_gettime(CLOCK_MONOTONIC,&after2);
     if (res == c1) {
-        clock_gettime(CLOCK_MONOTONIC, &after1);
         unsigned long time1 = (before1.tv_sec * 1000000000) + before1.tv_nsec;
         unsigned long time2 = (after2.tv_sec * 1000000000) + after2.tv_nsec;
         float time_taken = ((float)(time2 - time1))/1000000000;
         times[0] = time_taken;
     }
     else if (res == c2)  {
-        clock_gettime(CLOCK_MONOTONIC, &after2);
         unsigned long time1 = (before2.tv_sec * 1000000000) + before2.tv_nsec;
         unsigned long time2 = (after2.tv_sec * 1000000000) + after2.tv_nsec;
         float time_taken = ((float)(time2 - time1))/1000000000;
         times[1] = time_taken;
     }
     else if (res == c3) {
-        clock_gettime(CLOCK_MONOTONIC, &after1);
         unsigned long time1 = (before3.tv_sec * 1000000000) + before3.tv_nsec;
         unsigned long time2 = (after2.tv_sec * 1000000000) + after2.tv_nsec;
         float time_taken = ((float)(time2 - time1))/1000000000;
@@ -92,21 +86,18 @@ int main() {
     res = wait(NULL);
     clock_gettime(CLOCK_MONOTONIC,&after3);
     if (res == c1) {
-        clock_gettime(CLOCK_MONOTONIC, &after1);
         unsigned long time1 = (before1.tv_sec * 1000000000) + before1.tv_nsec;
         unsigned long time2 = (after3.tv_sec * 1000000000) + after3.tv_nsec;
         float time_taken = ((float)(time2 - time1))/1000000000;
         times[0] = time_taken;
     }
     else if (res == c2)  {
-        clock_gettime(CLOCK_MONOTONIC, &after2);
         unsigned long time1 = (before2.tv_sec * 1000000000) + before2.tv_nsec;
         unsigned long time2 = (after3.tv_sec * 1000000000) + after3.tv_nsec;
         float time_taken = ((float)(time2 - time1))/1000000000;
         times[1] = time_taken;
     }
     else if (res == c3) {
-        clock_gettime(CLOCK_MONOTONIC, &after1);
         unsigned long time1 = (before3.tv_sec * 1000000000) + before3.tv_nsec;
         unsigned long time2 = (after3.tv_sec * 1000000000) + after3.tv_nsec;
         float time_taken = ((float)(time2 - time1))/1000000000;
